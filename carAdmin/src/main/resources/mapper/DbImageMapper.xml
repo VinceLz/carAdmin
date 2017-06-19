@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbImageMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbImage" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="mbid" property="mbid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    iid, image, bid, gid, mid, mbid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbImageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_image
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_image
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByGid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_image
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+   <select id="selectByMid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_image
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByBid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_image
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectByMibd" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_image
+    where mbid = #{mbid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_image
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbImageExample" >
+    delete from db_image
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbImage" >
+    insert into db_image (iid, image, bid, 
+      gid, mid, mbid)
+    values (#{iid,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{bid,jdbcType=INTEGER}, 
+      #{gid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{mbid,jdbcType=INTEGER})
+  </insert>
+   <insert id="insertNewDbImage" parameterType="com.xawl.car.pojo.DbImage" >
+    insert into db_image (image, bid, 
+      gid, mid, mbid)
+    values (#{image,jdbcType=VARCHAR}, #{bid,jdbcType=INTEGER}, 
+      #{gid,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{mbid,jdbcType=INTEGER})
+  </insert>
+ 
+  
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbImage" >
+    insert into db_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="mbid != null" >
+        mbid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mbid != null" >
+        #{mbid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbImageExample" resultType="java.lang.Integer" >
+    select count(*) from db_image
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_image
+    <set >
+      <if test="record.iid != null" >
+        iid = #{record.iid,jdbcType=INTEGER},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.mbid != null" >
+        mbid = #{record.mbid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_image
+    set iid = #{record.iid,jdbcType=INTEGER},
+      image = #{record.image,jdbcType=VARCHAR},
+      bid = #{record.bid,jdbcType=INTEGER},
+      gid = #{record.gid,jdbcType=INTEGER},
+      mid = #{record.mid,jdbcType=INTEGER},
+      mbid = #{record.mbid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbImage" >
+    update db_image
+    <set >
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        bid = #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="mbid != null" >
+        mbid = #{mbid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbImage" >
+    update db_image
+    set image = #{image,jdbcType=VARCHAR},
+      bid = #{bid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER},
+      mid = #{mid,jdbcType=INTEGER},
+      mbid = #{mbid,jdbcType=INTEGER}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbGoods" >
+    <id column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="gdate" property="gdate" jdbcType="TIMESTAMP" />
+    <result column="sale" property="sale" jdbcType="INTEGER" />
+    <result column="isHot" property="ishot" jdbcType="BIT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="maxprice" property="maxprice" jdbcType="DECIMAL" />
+    <result column="minprice" property="minprice" jdbcType="DECIMAL" />
+    <result column="gshowImage" property="gshowimage" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gid, gname, bid, gdate, sale, isHot, title, maxprice, minprice, gshowImage
+  </sql>
+   <select id="findByGid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   	select 
+   	<include refid="Base_Column_List"></include>
+   	from db_goods
+    where gid = #{gid,jdbcType=INTEGER}
+   </select>
+   
+  <select id="getLikeGname" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT 
+    gid,gname,bid 
+    FROM db_goods 
+    WHERE gname LIKE CONCAT(CONCAT(#{gname}),'%');
+  </select>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByBid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_goods
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_goods
+    where gid = #{gid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbGoodsExample" >
+    delete from db_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbGoods" >
+    insert into db_goods (gid, gname, bid, 
+      gdate, sale, isHot, 
+      title,
+      gshowImage)
+    values (#{gid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, #{bid,jdbcType=INTEGER}, 
+      #{gdate,jdbcType=TIMESTAMP}, #{sale,jdbcType=INTEGER}, #{ishot,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR},
+      #{gshowimage,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertNewBidGoods" parameterType="com.xawl.car.pojo.DbGoods"  >
+    
+    <selectKey keyProperty="gid" order="AFTER" resultType="java.lang.Integer" >
+    select last_insert_id()
+    </selectKey>
+    insert into db_goods (gname, bid, 
+      gdate, sale, isHot, 
+      title,
+      gshowImage)
+    values (#{gname,jdbcType=VARCHAR}, #{bid,jdbcType=INTEGER}, 
+      #{gdate,jdbcType=TIMESTAMP}, #{sale,jdbcType=INTEGER}, #{ishot,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR},
+      #{gshowimage,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbGoods" >
+    insert into db_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="gdate != null" >
+        gdate,
+      </if>
+      <if test="sale != null" >
+        sale,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="maxprice != null" >
+        maxprice,
+      </if>
+      <if test="minprice != null" >
+        minprice,
+      </if>
+      <if test="gshowimage != null" >
+        gshowImage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="gdate != null" >
+        #{gdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sale != null" >
+        #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="maxprice != null" >
+        #{maxprice,jdbcType=DECIMAL},
+      </if>
+      <if test="minprice != null" >
+        #{minprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gshowimage != null" >
+        #{gshowimage,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from db_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_goods
+    <set >
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gname != null" >
+        gname = #{record.gname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gdate != null" >
+        gdate = #{record.gdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sale != null" >
+        sale = #{record.sale,jdbcType=INTEGER},
+      </if>
+      <if test="record.ishot != null" >
+        isHot = #{record.ishot,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxprice != null" >
+        maxprice = #{record.maxprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.minprice != null" >
+        minprice = #{record.minprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gshowimage != null" >
+        gshowImage = #{record.gshowimage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_goods
+    set gid = #{record.gid,jdbcType=INTEGER},
+      gname = #{record.gname,jdbcType=VARCHAR},
+      bid = #{record.bid,jdbcType=INTEGER},
+      gdate = #{record.gdate,jdbcType=TIMESTAMP},
+      sale = #{record.sale,jdbcType=INTEGER},
+      isHot = #{record.ishot,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      maxprice = #{record.maxprice,jdbcType=DECIMAL},
+      minprice = #{record.minprice,jdbcType=DECIMAL},
+      gshowImage = #{record.gshowimage,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbGoods" >
+    update db_goods
+    <set >
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        bid = #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="gdate != null" >
+        gdate = #{gdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sale != null" >
+        sale = #{sale,jdbcType=INTEGER},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="maxprice != null" >
+        maxprice = #{maxprice,jdbcType=DECIMAL},
+      </if>
+      <if test="minprice != null" >
+        minprice = #{minprice,jdbcType=DECIMAL},
+      </if>
+      <if test="gshowimage != null" >
+        gshowImage = #{gshowimage,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbGoods" >
+    update db_goods
+    set gname = #{gname,jdbcType=VARCHAR},
+      bid = #{bid,jdbcType=INTEGER},
+      gdate = #{gdate,jdbcType=TIMESTAMP},
+      sale = #{sale,jdbcType=INTEGER},
+      isHot = #{ishot,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      maxprice = #{maxprice,jdbcType=DECIMAL},
+      minprice = #{minprice,jdbcType=DECIMAL},
+      gshowImage = #{gshowimage,jdbcType=VARCHAR}
+    where gid = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>

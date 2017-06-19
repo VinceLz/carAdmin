@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbHomeMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbHome" >
+    <id column="hid" property="hid" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="isHot" property="ishot" jdbcType="INTEGER" />
+    <result column="date" property="date" jdbcType="DATE" />
+    <result column="orders" property="orders" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    hid, image, title, type, url, isHot, date, orders
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbHomeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_home
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_home
+    where hid = #{hid,jdbcType=INTEGER}
+  </select>
+ 
+ 
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.util.Map">
+    select 
+    <include refid="Base_Column_List" />
+    from db_home
+    where orders = #{orders} and type=#{type} 
+  </select>
+  
+  
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_home
+    where hid = #{hid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbHomeExample" >
+    delete from db_home
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbHome" >
+    insert into db_home (hid, image, title, 
+      type, url, isHot, date, 
+      orders)
+    values (#{hid,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT}, #{url,jdbcType=VARCHAR}, #{ishot,jdbcType=INTEGER}, #{date,jdbcType=DATE}, 
+      #{orders,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbHome" >
+    insert into db_home
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hid != null" >
+        hid,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="orders != null" >
+        orders,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hid != null" >
+        #{hid,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=DATE},
+      </if>
+      <if test="orders != null" >
+        #{orders,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbHomeExample" resultType="java.lang.Integer" >
+    select count(*) from db_home
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_home
+    <set >
+      <if test="record.hid != null" >
+        hid = #{record.hid,jdbcType=INTEGER},
+      </if>
+      <if test="record.image != null" >
+        image = #{record.image,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.url != null" >
+        url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ishot != null" >
+        isHot = #{record.ishot,jdbcType=INTEGER},
+      </if>
+      <if test="record.date != null" >
+        date = #{record.date,jdbcType=DATE},
+      </if>
+      <if test="record.orders != null" >
+        orders = #{record.orders,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_home
+    set hid = #{record.hid,jdbcType=INTEGER},
+      image = #{record.image,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=TINYINT},
+      url = #{record.url,jdbcType=VARCHAR},
+      isHot = #{record.ishot,jdbcType=INTEGER},
+      date = #{record.date,jdbcType=DATE},
+      orders = #{record.orders,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbHome" >
+    update db_home
+    <set >
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="date != null" >
+        date = #{date,jdbcType=DATE},
+      </if>
+      <if test="orders != null" >
+        orders = #{orders,jdbcType=TINYINT},
+      </if>
+    </set>
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbHome" >
+    update db_home
+    set image = #{image,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      url = #{url,jdbcType=VARCHAR},
+      isHot = #{ishot,jdbcType=INTEGER},
+      date = #{date,jdbcType=DATE},
+      orders = #{orders,jdbcType=TINYINT}
+    where hid = #{hid,jdbcType=INTEGER}
+  </update>
+</mapper>

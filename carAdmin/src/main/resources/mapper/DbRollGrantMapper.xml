@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbRollGrantMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbRollGrant" >
+    <id column="rgid" property="rgid" jdbcType="INTEGER" />
+    <result column="rgname" property="rgname" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="handler" property="handler" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xawl.car.pojo.DbRollGrant" extends="BaseResultMap" >
+    <result column="param" property="param" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rgid, rgname, status, handler
+  </sql>
+  <sql id="Blob_Column_List" >
+    param
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xawl.car.pojo.DbRollGrantExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from db_roll_grant
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbRollGrantExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_roll_grant
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from db_roll_grant
+    where rgid = #{rgid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_roll_grant
+    where rgid = #{rgid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbRollGrantExample" >
+    delete from db_roll_grant
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbRollGrant" >
+    insert into db_roll_grant (rgid, rgname, status, 
+      handler, param)
+    values (#{rgid,jdbcType=INTEGER}, #{rgname,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{handler,jdbcType=VARCHAR}, #{param,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbRollGrant" >
+    insert into db_roll_grant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rgid != null" >
+        rgid,
+      </if>
+      <if test="rgname != null" >
+        rgname,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="handler != null" >
+        handler,
+      </if>
+      <if test="param != null" >
+        param,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rgid != null" >
+        #{rgid,jdbcType=INTEGER},
+      </if>
+      <if test="rgname != null" >
+        #{rgname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="handler != null" >
+        #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="param != null" >
+        #{param,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbRollGrantExample" resultType="java.lang.Integer" >
+    select count(*) from db_roll_grant
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_roll_grant
+    <set >
+      <if test="record.rgid != null" >
+        rgid = #{record.rgid,jdbcType=INTEGER},
+      </if>
+      <if test="record.rgname != null" >
+        rgname = #{record.rgname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.handler != null" >
+        handler = #{record.handler,jdbcType=VARCHAR},
+      </if>
+      <if test="record.param != null" >
+        param = #{record.param,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update db_roll_grant
+    set rgid = #{record.rgid,jdbcType=INTEGER},
+      rgname = #{record.rgname,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      handler = #{record.handler,jdbcType=VARCHAR},
+      param = #{record.param,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_roll_grant
+    set rgid = #{record.rgid,jdbcType=INTEGER},
+      rgname = #{record.rgname,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=TINYINT},
+      handler = #{record.handler,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbRollGrant" >
+    update db_roll_grant
+    <set >
+      <if test="rgname != null" >
+        rgname = #{rgname,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="handler != null" >
+        handler = #{handler,jdbcType=VARCHAR},
+      </if>
+      <if test="param != null" >
+        param = #{param,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where rgid = #{rgid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xawl.car.pojo.DbRollGrant" >
+    update db_roll_grant
+    set rgname = #{rgname,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      handler = #{handler,jdbcType=VARCHAR},
+      param = #{param,jdbcType=LONGVARCHAR}
+    where rgid = #{rgid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbRollGrant" >
+    update db_roll_grant
+    set rgname = #{rgname,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      handler = #{handler,jdbcType=VARCHAR}
+    where rgid = #{rgid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbOrderitemMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbOrderitem" >
+    <id column="orderitem_id" property="orderitemId" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="gprice" property="gprice" jdbcType="DECIMAL" />
+    <result column="oid" property="oid" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.xawl.car.pojo.DbOrderitem" extends="BaseResultMap" >
+    <result column="gimage" property="gimage" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orderitem_id, gid, gname, gprice, oid
+  </sql>
+  <sql id="Blob_Column_List" >
+    gimage
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.xawl.car.pojo.DbOrderitemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from db_orderitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbOrderitemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_orderitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from db_orderitem
+    where orderitem_id = #{orderitemId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_orderitem
+    where orderitem_id = #{orderitemId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbOrderitemExample" >
+    delete from db_orderitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbOrderitem" >
+    insert into db_orderitem (orderitem_id, gid, gname, 
+      gprice, oid, gimage
+      )
+    values (#{orderitemId,jdbcType=INTEGER}, #{gid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, 
+      #{gprice,jdbcType=DECIMAL}, #{oid,jdbcType=VARCHAR}, #{gimage,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbOrderitem" >
+    insert into db_orderitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderitemId != null" >
+        orderitem_id,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="gprice != null" >
+        gprice,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="gimage != null" >
+        gimage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderitemId != null" >
+        #{orderitemId,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="gimage != null" >
+        #{gimage,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbOrderitemExample" resultType="java.lang.Integer" >
+    select count(*) from db_orderitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_orderitem
+    <set >
+      <if test="record.orderitemId != null" >
+        orderitem_id = #{record.orderitemId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gname != null" >
+        gname = #{record.gname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gprice != null" >
+        gprice = #{record.gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gimage != null" >
+        gimage = #{record.gimage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update db_orderitem
+    set orderitem_id = #{record.orderitemId,jdbcType=INTEGER},
+      gid = #{record.gid,jdbcType=INTEGER},
+      gname = #{record.gname,jdbcType=VARCHAR},
+      gprice = #{record.gprice,jdbcType=DECIMAL},
+      oid = #{record.oid,jdbcType=VARCHAR},
+      gimage = #{record.gimage,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_orderitem
+    set orderitem_id = #{record.orderitemId,jdbcType=INTEGER},
+      gid = #{record.gid,jdbcType=INTEGER},
+      gname = #{record.gname,jdbcType=VARCHAR},
+      gprice = #{record.gprice,jdbcType=DECIMAL},
+      oid = #{record.oid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbOrderitem" >
+    update db_orderitem
+    <set >
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gprice != null" >
+        gprice = #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="gimage != null" >
+        gimage = #{gimage,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where orderitem_id = #{orderitemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xawl.car.pojo.DbOrderitem" >
+    update db_orderitem
+    set gid = #{gid,jdbcType=INTEGER},
+      gname = #{gname,jdbcType=VARCHAR},
+      gprice = #{gprice,jdbcType=DECIMAL},
+      oid = #{oid,jdbcType=VARCHAR},
+      gimage = #{gimage,jdbcType=LONGVARCHAR}
+    where orderitem_id = #{orderitemId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbOrderitem" >
+    update db_orderitem
+    set gid = #{gid,jdbcType=INTEGER},
+      gname = #{gname,jdbcType=VARCHAR},
+      gprice = #{gprice,jdbcType=DECIMAL},
+      oid = #{oid,jdbcType=VARCHAR}
+    where orderitem_id = #{orderitemId,jdbcType=INTEGER}
+  </update>
+</mapper>

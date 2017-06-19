@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbCommentMapper">
+	<select id="selectAll" resultType="com.xawl.car.pojo.DbComment">
+		select * from db_comment
+	</select>
+
+
+	<delete id="delete" parameterType="int">
+		delete from db_comment where comment_id=#{id}
+	</delete>
+</mapper>

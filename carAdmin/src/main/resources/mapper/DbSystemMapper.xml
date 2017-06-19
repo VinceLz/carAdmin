@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbSystemMapper">
+	<resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbSystem">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="title2" property="title2" jdbcType="VARCHAR" />
+		<result column="stages12" property="stages12" jdbcType="VARCHAR" />
+		<result column="stages24" property="stages24" jdbcType="VARCHAR" />
+		<result column="stages36" property="stages36" jdbcType="VARCHAR" />
+		<result column="mbtitle2" property="mbtitle2" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, title2, stages12, stages24, stages36,mbtitle2
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.xawl.car.pojo.DbSystemExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from db_system
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+
+
+
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbSystem">
+		update db_system
+		<set>
+			<if test="title2 != null">
+				title2 = #{title2,jdbcType=VARCHAR},
+			</if>
+			<if test="stages12 != null">
+				stages12 = #{stages12,jdbcType=VARCHAR},
+			</if>
+			<if test="stages24 != null">
+				stages24 = #{stages24,jdbcType=VARCHAR},
+			</if>
+			<if test="stages36 != null">
+				stages36 = #{stages36,jdbcType=VARCHAR},
+			</if>
+			<if test="mbtitle2 != null">
+				mbtitle2 = #{mbtitle2,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>

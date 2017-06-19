@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbBackgroudErrMapper">
+
+
+	<insert id="insertMessage" parameterType="com.xawl.car.pojo.DbBackgroudErr">
+
+		insert into db_backgroud_err(date,message) 
+		values(#{date,jdbcType=VARCHAR},#{message,jdbcType=VARCHAR})
+
+	</insert>
+	<!-- bmname,price,ruid,sname,yoid, mbid,uid,uname,uphone,realprice,status,goodid,qid,date 
+		FROM db_yc_order -->
+</mapper>

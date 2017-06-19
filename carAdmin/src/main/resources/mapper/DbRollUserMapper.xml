@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbRollUserMapper">
+	<insert id="addRoll" parameterType="com.xawl.car.pojo.DbRollUser">
+		insert into
+		db_roll_user(uid,rid,pastdate,createdate,status) values(
+		#{uid},
+		#{rid},
+		#{pastdate},
+		#{createdate},
+		#{status}
+		)
+	</insert>
+	<select id="selectByUid" parameterType="int"
+		resultType="com.xawl.car.pojo.DbRollUserVo">
+		select * from db_roll r,db_roll_user u where r.rid=u.rid
+		and u.uid=#{uid}
+	</select>
+</mapper>

@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbOrder" >
+    <id column="oid" property="oid" jdbcType="INTEGER" />
+    <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />
+    <result column="total" property="total" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="bname" property="bname" jdbcType="VARCHAR" />
+    <result column="bphone" property="bphone" jdbcType="VARCHAR" />
+    <result column="uphone" property="uphone" jdbcType="VARCHAR" />
+    <result column="mname" property="mname" jdbcType="VARCHAR" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="color" property="color" jdbcType="VARCHAR" />
+    <result column="buyWay" property="buyway" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="cardCity" property="cardcity" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    oid, ordertime, total, status, uid, uname, bid, bname, bphone, uphone, mname, mid, 
+    gid, gname, color, buyWay, city, cardCity
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_order
+    where oid = #{oid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_order
+    where oid = #{oid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbOrderExample" >
+    delete from db_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbOrder" >
+    insert into db_order (oid, ordertime, total, 
+      status, uid, uname, 
+      bid, bname, bphone, 
+      uphone, mname, mid, 
+      gid, gname, color, 
+      buyWay, city, cardCity
+      )
+    values (#{oid,jdbcType=INTEGER}, #{ordertime,jdbcType=TIMESTAMP}, #{total,jdbcType=DECIMAL}, 
+      #{status,jdbcType=TINYINT}, #{uid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, 
+      #{bid,jdbcType=INTEGER}, #{bname,jdbcType=VARCHAR}, #{bphone,jdbcType=VARCHAR}, 
+      #{uphone,jdbcType=VARCHAR}, #{mname,jdbcType=VARCHAR}, #{mid,jdbcType=INTEGER}, 
+      #{gid,jdbcType=INTEGER}, #{gname,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{buyway,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{cardcity,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbOrder" >
+    insert into db_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="ordertime != null" >
+        ordertime,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="bname != null" >
+        bname,
+      </if>
+      <if test="bphone != null" >
+        bphone,
+      </if>
+      <if test="uphone != null" >
+        uphone,
+      </if>
+      <if test="mname != null" >
+        mname,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="gid != null" >
+        gid,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="color != null" >
+        color,
+      </if>
+      <if test="buyway != null" >
+        buyWay,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="cardcity != null" >
+        cardCity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="ordertime != null" >
+        #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="bname != null" >
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bphone != null" >
+        #{bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null" >
+        #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="buyway != null" >
+        #{buyway,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cardcity != null" >
+        #{cardcity,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbOrderExample" resultType="java.lang.Integer" >
+    select count(*) from db_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_order
+    <set >
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ordertime != null" >
+        ordertime = #{record.ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bname != null" >
+        bname = #{record.bname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bphone != null" >
+        bphone = #{record.bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uphone != null" >
+        uphone = #{record.uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mname != null" >
+        mname = #{record.mname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mid != null" >
+        mid = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gid != null" >
+        gid = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gname != null" >
+        gname = #{record.gname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.color != null" >
+        color = #{record.color,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyway != null" >
+        buyWay = #{record.buyway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardcity != null" >
+        cardCity = #{record.cardcity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_order
+    set oid = #{record.oid,jdbcType=INTEGER},
+      ordertime = #{record.ordertime,jdbcType=TIMESTAMP},
+      total = #{record.total,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=TINYINT},
+      uid = #{record.uid,jdbcType=INTEGER},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      bid = #{record.bid,jdbcType=INTEGER},
+      bname = #{record.bname,jdbcType=VARCHAR},
+      bphone = #{record.bphone,jdbcType=VARCHAR},
+      uphone = #{record.uphone,jdbcType=VARCHAR},
+      mname = #{record.mname,jdbcType=VARCHAR},
+      mid = #{record.mid,jdbcType=INTEGER},
+      gid = #{record.gid,jdbcType=INTEGER},
+      gname = #{record.gname,jdbcType=VARCHAR},
+      color = #{record.color,jdbcType=VARCHAR},
+      buyWay = #{record.buyway,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      cardCity = #{record.cardcity,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbOrder" >
+    update db_order
+    <set >
+      <if test="ordertime != null" >
+        ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="bid != null" >
+        bid = #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="bname != null" >
+        bname = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bphone != null" >
+        bphone = #{bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null" >
+        uphone = #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="mname != null" >
+        mname = #{mname,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="gid != null" >
+        gid = #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="buyway != null" >
+        buyWay = #{buyway,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="cardcity != null" >
+        cardCity = #{cardcity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbOrder" >
+    update db_order
+    set ordertime = #{ordertime,jdbcType=TIMESTAMP},
+      total = #{total,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      uid = #{uid,jdbcType=INTEGER},
+      uname = #{uname,jdbcType=VARCHAR},
+      bid = #{bid,jdbcType=INTEGER},
+      bname = #{bname,jdbcType=VARCHAR},
+      bphone = #{bphone,jdbcType=VARCHAR},
+      uphone = #{uphone,jdbcType=VARCHAR},
+      mname = #{mname,jdbcType=VARCHAR},
+      mid = #{mid,jdbcType=INTEGER},
+      gid = #{gid,jdbcType=INTEGER},
+      gname = #{gname,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      buyWay = #{buyway,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      cardCity = #{cardcity,jdbcType=VARCHAR}
+    where oid = #{oid,jdbcType=INTEGER}
+  </update>
+</mapper>

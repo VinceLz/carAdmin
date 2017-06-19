@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="carAdmin"
+  id="myeclipse.1481116009938"
+  context-root="/carAdmin"
+  j2ee-spec="5.0"
+  archive="carAdmin.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

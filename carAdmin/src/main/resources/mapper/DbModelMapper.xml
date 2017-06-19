@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbModelMapper">
+	<resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbModel">
+		<id column="mid" property="mid" jdbcType="INTEGER" />
+		<result column="mname" property="mname" jdbcType="VARCHAR" />
+		<result column="gid" property="gid" jdbcType="INTEGER" />
+		<result column="level" property="level" jdbcType="VARCHAR" />
+		<result column="output" property="output" jdbcType="VARCHAR" />
+		<result column="drive" property="drive" jdbcType="VARCHAR" />
+		<result column="fuel" property="fuel" jdbcType="VARCHAR" />
+		<result column="transmission" property="transmission" jdbcType="VARCHAR" />
+		<result column="country" property="country" jdbcType="VARCHAR" />
+		<result column="produce" property="produce" jdbcType="VARCHAR" />
+		<result column="structure" property="structure" jdbcType="VARCHAR" />
+		<result column="seat" property="seat" jdbcType="VARCHAR" />
+		<result column="keyword" property="keyword" jdbcType="VARCHAR" />
+		<result column="isHot" property="ishot" jdbcType="BIT" />
+		<result column="guidegprice" property="guidegprice" jdbcType="DECIMAL" />
+		<result column="gprice" property="gprice" jdbcType="DECIMAL" />
+		<result column="gname" property="gname" jdbcType="VARCHAR" />
+		<result column="mshowImage" property="mshowimage" jdbcType="VARCHAR" />
+		<result column="mtitle" property="mtitle" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.xawl.car.pojo.DbModel"
+		extends="BaseResultMap">
+		<result column="configure" property="configure" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		mid, mname, gid, level, output, drive, fuel, transmission, country,
+		produce, structure,
+		seat, keyword, isHot, guidegprice, gprice, gname, mshowImage, mtitle
+	</sql>
+	<sql id="Blob_Column_List">
+		configure
+	</sql>
+	<select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+		parameterType="com.xawl.car.pojo.DbModelExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from db_model
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectEn" resultType="com.xawl.car.pojo.DbModel"
+		parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from db_model
+		where configure IS NULL OR configure LIKE '' AND gid = #{gid}
+	</select>
+
+	<select id="selectByGid" resultType="com.xawl.car.pojo.DbModel"
+		parameterType="java.lang.Integer">
+		SELECT
+		mid, mname,configure, gid, level, output, drive, fuel, transmission,
+		country, produce, structure,
+		seat, keyword, isHot, guidegprice, gprice, gname, mshowImage, mtitle
+		from db_model
+		where gid = #{gid}
+	</select>
+
+
+
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.xawl.car.pojo.DbModelExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from db_model
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from db_model
+		where mid = #{mid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from db_model
+		where mid = #{mid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbModelExample">
+		delete from db_model
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.xawl.car.pojo.DbModel">
+		insert into db_model (mid, mname, gid,
+		level, output, drive,
+		fuel, transmission, country,
+		produce, structure, seat,
+		keyword, isHot, guidegprice,
+		gprice, gname, mshowImage,
+		mtitle, configure)
+		values (#{mid,jdbcType=INTEGER}, #{mname,jdbcType=VARCHAR},
+		#{gid,jdbcType=INTEGER},
+		#{level,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR}, #{drive,jdbcType=VARCHAR},
+		#{fuel,jdbcType=VARCHAR}, #{transmission,jdbcType=VARCHAR},
+		#{country,jdbcType=VARCHAR},
+		#{produce,jdbcType=VARCHAR}, #{structure,jdbcType=VARCHAR}, #{seat,jdbcType=VARCHAR},
+		#{keyword,jdbcType=VARCHAR}, #{ishot,jdbcType=INTEGER},
+		#{guidegprice,jdbcType=DECIMAL},
+		#{gprice,jdbcType=DECIMAL}, #{gname,jdbcType=VARCHAR}, #{mshowimage,jdbcType=VARCHAR},
+		#{mtitle,jdbcType=VARCHAR}, #{configure,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertNewDbModel" parameterType="com.xawl.car.pojo.DbModel">
+		<selectKey keyProperty="mid" order="AFTER" resultType="java.lang.Integer">
+			select last_insert_id()
+		</selectKey>
+
+		insert into db_model (mname, gid,
+		level, output, drive,
+		fuel, transmission, country,
+		produce, structure, seat,
+		keyword, isHot, guidegprice,
+		gprice, gname, mshowImage,
+		mtitle, configure)
+		values (#{mname,jdbcType=VARCHAR},#{gid,jdbcType=INTEGER},
+		#{level,jdbcType=VARCHAR}, #{output,jdbcType=VARCHAR},
+		#{drive,jdbcType=VARCHAR},
+		#{fuel,jdbcType=VARCHAR}, #{transmission,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR},
+		#{produce,jdbcType=VARCHAR}, #{structure,jdbcType=VARCHAR},
+		#{seat,jdbcType=VARCHAR},
+		#{keyword,jdbcType=VARCHAR}, #{ishot,jdbcType=INTEGER}, #{guidegprice,jdbcType=DECIMAL},
+		#{gprice,jdbcType=DECIMAL}, #{gname,jdbcType=VARCHAR},
+		#{mshowimage,jdbcType=VARCHAR},
+		#{mtitle,jdbcType=VARCHAR}, #{configure,jdbcType=LONGVARCHAR})
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.xawl.car.pojo.DbModel">
+		insert into db_model
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="mid != null">
+				mid,
+			</if>
+			<if test="mname != null">
+				mname,
+			</if>
+			<if test="gid != null">
+				gid,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="output != null">
+				output,
+			</if>
+			<if test="drive != null">
+				drive,
+			</if>
+			<if test="fuel != null">
+				fuel,
+			</if>
+			<if test="transmission != null">
+				transmission,
+			</if>
+			<if test="country != null">
+				country,
+			</if>
+			<if test="produce != null">
+				produce,
+			</if>
+			<if test="structure != null">
+				structure,
+			</if>
+			<if test="seat != null">
+				seat,
+			</if>
+			<if test="keyword != null">
+				keyword,
+			</if>
+			<if test="ishot != null">
+				isHot,
+			</if>
+			<if test="guidegprice != null">
+				guidegprice,
+			</if>
+			<if test="gprice != null">
+				gprice,
+			</if>
+			<if test="gname != null">
+				gname,
+			</if>
+			<if test="mshowimage != null">
+				mshowImage,
+			</if>
+			<if test="mtitle != null">
+				mtitle,
+			</if>
+			<if test="configure != null">
+				configure,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="mid != null">
+				#{mid,jdbcType=INTEGER},
+			</if>
+			<if test="mname != null">
+				#{mname,jdbcType=VARCHAR},
+			</if>
+			<if test="gid != null">
+				#{gid,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=VARCHAR},
+			</if>
+			<if test="output != null">
+				#{output,jdbcType=VARCHAR},
+			</if>
+			<if test="drive != null">
+				#{drive,jdbcType=VARCHAR},
+			</if>
+			<if test="fuel != null">
+				#{fuel,jdbcType=VARCHAR},
+			</if>
+			<if test="transmission != null">
+				#{transmission,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				#{country,jdbcType=VARCHAR},
+			</if>
+			<if test="produce != null">
+				#{produce,jdbcType=VARCHAR},
+			</if>
+			<if test="structure != null">
+				#{structure,jdbcType=VARCHAR},
+			</if>
+			<if test="seat != null">
+				#{seat,jdbcType=VARCHAR},
+			</if>
+			<if test="keyword != null">
+				#{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="ishot != null">
+				#{ishot,jdbcType=INTEGER},
+			</if>
+			<if test="guidegprice != null">
+				#{guidegprice,jdbcType=DECIMAL},
+			</if>
+			<if test="gprice != null">
+				#{gprice,jdbcType=DECIMAL},
+			</if>
+			<if test="gname != null">
+				#{gname,jdbcType=VARCHAR},
+			</if>
+			<if test="mshowimage != null">
+				#{mshowimage,jdbcType=VARCHAR},
+			</if>
+			<if test="mtitle != null">
+				#{mtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="configure != null">
+				#{configure,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.xawl.car.pojo.DbModelExample"
+		resultType="java.lang.Integer">
+		select count(*) from db_model
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<update id="updateByExampleSelective" parameterType="map">
+		update db_model
+		<set>
+			<if test="record.mid != null">
+				mid = #{record.mid,jdbcType=INTEGER},
+			</if>
+			<if test="record.mname != null">
+				mname = #{record.mname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.gid != null">
+				gid = #{record.gid,jdbcType=INTEGER},
+			</if>
+			<if test="record.level != null">
+				level = #{record.level,jdbcType=VARCHAR},
+			</if>
+			<if test="record.output != null">
+				output = #{record.output,jdbcType=VARCHAR},
+			</if>
+			<if test="record.drive != null">
+				drive = #{record.drive,jdbcType=VARCHAR},
+			</if>
+			<if test="record.fuel != null">
+				fuel = #{record.fuel,jdbcType=VARCHAR},
+			</if>
+			<if test="record.transmission != null">
+				transmission = #{record.transmission,jdbcType=VARCHAR},
+			</if>
+			<if test="record.country != null">
+				country = #{record.country,jdbcType=VARCHAR},
+			</if>
+			<if test="record.produce != null">
+				produce = #{record.produce,jdbcType=VARCHAR},
+			</if>
+			<if test="record.structure != null">
+				structure = #{record.structure,jdbcType=VARCHAR},
+			</if>
+			<if test="record.seat != null">
+				seat = #{record.seat,jdbcType=VARCHAR},
+			</if>
+			<if test="record.keyword != null">
+				keyword = #{record.keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="record.ishot != null">
+				isHot = #{record.ishot,jdbcType=INTEGER},
+			</if>
+			<if test="record.guidegprice != null">
+				guidegprice = #{record.guidegprice,jdbcType=DECIMAL},
+			</if>
+			<if test="record.gprice != null">
+				gprice = #{record.gprice,jdbcType=DECIMAL},
+			</if>
+			<if test="record.gname != null">
+				gname = #{record.gname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.mshowimage != null">
+				mshowImage = #{record.mshowimage,jdbcType=VARCHAR},
+			</if>
+			<if test="record.mtitle != null">
+				mtitle = #{record.mtitle,jdbcType=VARCHAR},
+			</if>
+			<if test="record.configure != null">
+				configure = #{record.configure,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update db_model
+		set mid = #{record.mid,jdbcType=INTEGER},
+		mname = #{record.mname,jdbcType=VARCHAR},
+		gid = #{record.gid,jdbcType=INTEGER},
+		level = #{record.level,jdbcType=VARCHAR},
+		output = #{record.output,jdbcType=VARCHAR},
+		drive = #{record.drive,jdbcType=VARCHAR},
+		fuel = #{record.fuel,jdbcType=VARCHAR},
+		transmission = #{record.transmission,jdbcType=VARCHAR},
+		country = #{record.country,jdbcType=VARCHAR},
+		produce = #{record.produce,jdbcType=VARCHAR},
+		structure = #{record.structure,jdbcType=VARCHAR},
+		seat = #{record.seat,jdbcType=VARCHAR},
+		keyword = #{record.keyword,jdbcType=VARCHAR},
+		isHot = #{record.ishot,jdbcType=INTEGER},
+		guidegprice = #{record.guidegprice,jdbcType=DECIMAL},
+		gprice = #{record.gprice,jdbcType=DECIMAL},
+		gname = #{record.gname,jdbcType=VARCHAR},
+		mshowImage = #{record.mshowimage,jdbcType=VARCHAR},
+		mtitle = #{record.mtitle,jdbcType=VARCHAR},
+		configure = #{record.configure,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update db_model
+		set mid = #{record.mid,jdbcType=INTEGER},
+		mname = #{record.mname,jdbcType=VARCHAR},
+		gid = #{record.gid,jdbcType=INTEGER},
+		level = #{record.level,jdbcType=VARCHAR},
+		output = #{record.output,jdbcType=VARCHAR},
+		drive = #{record.drive,jdbcType=VARCHAR},
+		fuel = #{record.fuel,jdbcType=VARCHAR},
+		transmission = #{record.transmission,jdbcType=VARCHAR},
+		country = #{record.country,jdbcType=VARCHAR},
+		produce = #{record.produce,jdbcType=VARCHAR},
+		structure = #{record.structure,jdbcType=VARCHAR},
+		seat = #{record.seat,jdbcType=VARCHAR},
+		keyword = #{record.keyword,jdbcType=VARCHAR},
+		isHot = #{record.ishot,jdbcType=INTEGER},
+		guidegprice = #{record.guidegprice,jdbcType=DECIMAL},
+		gprice = #{record.gprice,jdbcType=DECIMAL},
+		gname = #{record.gname,jdbcType=VARCHAR},
+		mshowImage = #{record.mshowimage,jdbcType=VARCHAR},
+		mtitle = #{record.mtitle,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbModel">
+		update db_model
+		<set>
+			<if test="mname != null">
+				mname = #{mname,jdbcType=VARCHAR},
+			</if>
+			<if test="gid != null">
+				gid = #{gid,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=VARCHAR},
+			</if>
+			<if test="output != null">
+				output = #{output,jdbcType=VARCHAR},
+			</if>
+			<if test="drive != null">
+				drive = #{drive,jdbcType=VARCHAR},
+			</if>
+			<if test="fuel != null">
+				fuel = #{fuel,jdbcType=VARCHAR},
+			</if>
+			<if test="transmission != null">
+				transmission = #{transmission,jdbcType=VARCHAR},
+			</if>
+			<if test="country != null">
+				country = #{country,jdbcType=VARCHAR},
+			</if>
+			<if test="produce != null">
+				produce = #{produce,jdbcType=VARCHAR},
+			</if>
+			<if test="structure != null">
+				structure = #{structure,jdbcType=VARCHAR},
+			</if>
+			<if test="seat != null">
+				seat = #{seat,jdbcType=VARCHAR},
+			</if>
+			<if test="keyword != null">
+				keyword = #{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="ishot != null">
+				isHot = #{ishot,jdbcType=INTEGER},
+			</if>
+			<if test="guidegprice != null">
+				guidegprice = #{guidegprice,jdbcType=DECIMAL},
+			</if>
+			<if test="gprice != null">
+				gprice = #{gprice,jdbcType=DECIMAL},
+			</if>
+			<if test="gname != null">
+				gname = #{gname,jdbcType=VARCHAR},
+			</if>
+			<if test="mshowimage != null">
+				mshowImage = #{mshowimage,jdbcType=VARCHAR},
+			</if>
+			<if test="mtitle != null">
+				mtitle = #{mtitle,jdbcType=VARCHAR},
+			</if>
+			<!--<if test="configure != null" > -->
+			<!--configure = #{configure,jdbcType=LONGVARCHAR}, -->
+			<!--</if> -->
+		</set>
+		where mid = #{mid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xawl.car.pojo.DbModel">
+		update db_model
+		set mname = #{mname,jdbcType=VARCHAR},
+		gid = #{gid,jdbcType=INTEGER},
+		level = #{level,jdbcType=VARCHAR},
+		output = #{output,jdbcType=VARCHAR},
+		drive = #{drive,jdbcType=VARCHAR},
+		fuel = #{fuel,jdbcType=VARCHAR},
+		transmission = #{transmission,jdbcType=VARCHAR},
+		country = #{country,jdbcType=VARCHAR},
+		produce = #{produce,jdbcType=VARCHAR},
+		structure = #{structure,jdbcType=VARCHAR},
+		seat = #{seat,jdbcType=VARCHAR},
+		keyword = #{keyword,jdbcType=VARCHAR},
+		isHot = #{ishot,jdbcType=INTEGER},
+		guidegprice = #{guidegprice,jdbcType=DECIMAL},
+		gprice = #{gprice,jdbcType=DECIMAL},
+		gname = #{gname,jdbcType=VARCHAR},
+		mshowImage = #{mshowimage,jdbcType=VARCHAR},
+		mtitle = #{mtitle,jdbcType=VARCHAR},
+		configure = #{configure,jdbcType=LONGVARCHAR}
+		where mid = #{mid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbModel">
+		update db_model
+		set mname = #{mname,jdbcType=VARCHAR},
+		gid = #{gid,jdbcType=INTEGER},
+		level = #{level,jdbcType=VARCHAR},
+		output = #{output,jdbcType=VARCHAR},
+		drive = #{drive,jdbcType=VARCHAR},
+		fuel = #{fuel,jdbcType=VARCHAR},
+		transmission = #{transmission,jdbcType=VARCHAR},
+		country = #{country,jdbcType=VARCHAR},
+		produce = #{produce,jdbcType=VARCHAR},
+		structure = #{structure,jdbcType=VARCHAR},
+		seat = #{seat,jdbcType=VARCHAR},
+		keyword = #{keyword,jdbcType=VARCHAR},
+		isHot = #{ishot,jdbcType=INTEGER},
+		guidegprice = #{guidegprice,jdbcType=DECIMAL},
+		gprice = #{gprice,jdbcType=DECIMAL},
+		gname = #{gname,jdbcType=VARCHAR},
+		mshowImage = #{mshowimage,jdbcType=VARCHAR},
+		mtitle = #{mtitle,jdbcType=VARCHAR}
+		where mid = #{mid,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateConfig" parameterType="com.xawl.car.pojo.DbModel">
+		update db_model set configure=#{configure} where mid=#{mid}
+	</update>
+</mapper>

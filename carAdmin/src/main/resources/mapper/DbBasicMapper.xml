@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbBasicMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbBasic" >
+    <id column="basicId" property="basicid" jdbcType="INTEGER" />
+    <result column="gprice" property="gprice" jdbcType="DECIMAL" />
+    <result column="subsidy" property="subsidy" jdbcType="DECIMAL" />
+    <result column="guidegPrice" property="guidegprice" jdbcType="DECIMAL" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="motor" property="motor" jdbcType="VARCHAR" />
+    <result column="transmission" property="transmission" jdbcType="VARCHAR" />
+    <result column="l-w-h" property="lWH" jdbcType="VARCHAR" />
+    <result column="structure" property="structure" jdbcType="VARCHAR" />
+    <result column="maxSpeed" property="maxspeed" jdbcType="VARCHAR" />
+    <result column="official0" property="official0" jdbcType="VARCHAR" />
+    <result column="reality100" property="reality100" jdbcType="VARCHAR" />
+    <result column="reality0" property="reality0" jdbcType="VARCHAR" />
+    <result column="oilWear" property="oilwear" jdbcType="VARCHAR" />
+    <result column="colligateOil" property="colligateoil" jdbcType="VARCHAR" />
+    <result column="realityGap" property="realitygap" jdbcType="VARCHAR" />
+    <result column="warranty" property="warranty" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    basicId, gprice, subsidy, guidegPrice, level, motor, transmission, l-w-h, structure, 
+    maxSpeed, official0, reality100, reality0, oilWear, colligateOil, realityGap, warranty
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbBasicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_basic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_basic
+    where basicId = #{basicid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_basic
+    where basicId = #{basicid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbBasicExample" >
+    delete from db_basic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbBasic" >
+    insert into db_basic (basicId, gprice, subsidy, 
+      guidegPrice, level, motor, 
+      transmission, l-w-h, structure, 
+      maxSpeed, official0, reality100, 
+      reality0, oilWear, colligateOil, 
+      realityGap, warranty)
+    values (#{basicid,jdbcType=INTEGER}, #{gprice,jdbcType=DECIMAL}, #{subsidy,jdbcType=DECIMAL}, 
+      #{guidegprice,jdbcType=DECIMAL}, #{level,jdbcType=VARCHAR}, #{motor,jdbcType=VARCHAR}, 
+      #{transmission,jdbcType=VARCHAR}, #{lWH,jdbcType=VARCHAR}, #{structure,jdbcType=VARCHAR}, 
+      #{maxspeed,jdbcType=VARCHAR}, #{official0,jdbcType=VARCHAR}, #{reality100,jdbcType=VARCHAR}, 
+      #{reality0,jdbcType=VARCHAR}, #{oilwear,jdbcType=VARCHAR}, #{colligateoil,jdbcType=VARCHAR}, 
+      #{realitygap,jdbcType=VARCHAR}, #{warranty,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbBasic" >
+    insert into db_basic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="basicid != null" >
+        basicId,
+      </if>
+      <if test="gprice != null" >
+        gprice,
+      </if>
+      <if test="subsidy != null" >
+        subsidy,
+      </if>
+      <if test="guidegprice != null" >
+        guidegPrice,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="motor != null" >
+        motor,
+      </if>
+      <if test="transmission != null" >
+        transmission,
+      </if>
+      <if test="lWH != null" >
+        l-w-h,
+      </if>
+      <if test="structure != null" >
+        structure,
+      </if>
+      <if test="maxspeed != null" >
+        maxSpeed,
+      </if>
+      <if test="official0 != null" >
+        official0,
+      </if>
+      <if test="reality100 != null" >
+        reality100,
+      </if>
+      <if test="reality0 != null" >
+        reality0,
+      </if>
+      <if test="oilwear != null" >
+        oilWear,
+      </if>
+      <if test="colligateoil != null" >
+        colligateOil,
+      </if>
+      <if test="realitygap != null" >
+        realityGap,
+      </if>
+      <if test="warranty != null" >
+        warranty,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="basicid != null" >
+        #{basicid,jdbcType=INTEGER},
+      </if>
+      <if test="gprice != null" >
+        #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidy != null" >
+        #{subsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="guidegprice != null" >
+        #{guidegprice,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="motor != null" >
+        #{motor,jdbcType=VARCHAR},
+      </if>
+      <if test="transmission != null" >
+        #{transmission,jdbcType=VARCHAR},
+      </if>
+      <if test="lWH != null" >
+        #{lWH,jdbcType=VARCHAR},
+      </if>
+      <if test="structure != null" >
+        #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="maxspeed != null" >
+        #{maxspeed,jdbcType=VARCHAR},
+      </if>
+      <if test="official0 != null" >
+        #{official0,jdbcType=VARCHAR},
+      </if>
+      <if test="reality100 != null" >
+        #{reality100,jdbcType=VARCHAR},
+      </if>
+      <if test="reality0 != null" >
+        #{reality0,jdbcType=VARCHAR},
+      </if>
+      <if test="oilwear != null" >
+        #{oilwear,jdbcType=VARCHAR},
+      </if>
+      <if test="colligateoil != null" >
+        #{colligateoil,jdbcType=VARCHAR},
+      </if>
+      <if test="realitygap != null" >
+        #{realitygap,jdbcType=VARCHAR},
+      </if>
+      <if test="warranty != null" >
+        #{warranty,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbBasicExample" resultType="java.lang.Integer" >
+    select count(*) from db_basic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_basic
+    <set >
+      <if test="record.basicid != null" >
+        basicId = #{record.basicid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gprice != null" >
+        gprice = #{record.gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.subsidy != null" >
+        subsidy = #{record.subsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="record.guidegprice != null" >
+        guidegPrice = #{record.guidegprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motor != null" >
+        motor = #{record.motor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transmission != null" >
+        transmission = #{record.transmission,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lWH != null" >
+        l-w-h = #{record.lWH,jdbcType=VARCHAR},
+      </if>
+      <if test="record.structure != null" >
+        structure = #{record.structure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxspeed != null" >
+        maxSpeed = #{record.maxspeed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.official0 != null" >
+        official0 = #{record.official0,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reality100 != null" >
+        reality100 = #{record.reality100,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reality0 != null" >
+        reality0 = #{record.reality0,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oilwear != null" >
+        oilWear = #{record.oilwear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.colligateoil != null" >
+        colligateOil = #{record.colligateoil,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realitygap != null" >
+        realityGap = #{record.realitygap,jdbcType=VARCHAR},
+      </if>
+      <if test="record.warranty != null" >
+        warranty = #{record.warranty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_basic
+    set basicId = #{record.basicid,jdbcType=INTEGER},
+      gprice = #{record.gprice,jdbcType=DECIMAL},
+      subsidy = #{record.subsidy,jdbcType=DECIMAL},
+      guidegPrice = #{record.guidegprice,jdbcType=DECIMAL},
+      level = #{record.level,jdbcType=VARCHAR},
+      motor = #{record.motor,jdbcType=VARCHAR},
+      transmission = #{record.transmission,jdbcType=VARCHAR},
+      l-w-h = #{record.lWH,jdbcType=VARCHAR},
+      structure = #{record.structure,jdbcType=VARCHAR},
+      maxSpeed = #{record.maxspeed,jdbcType=VARCHAR},
+      official0 = #{record.official0,jdbcType=VARCHAR},
+      reality100 = #{record.reality100,jdbcType=VARCHAR},
+      reality0 = #{record.reality0,jdbcType=VARCHAR},
+      oilWear = #{record.oilwear,jdbcType=VARCHAR},
+      colligateOil = #{record.colligateoil,jdbcType=VARCHAR},
+      realityGap = #{record.realitygap,jdbcType=VARCHAR},
+      warranty = #{record.warranty,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbBasic" >
+    update db_basic
+    <set >
+      <if test="gprice != null" >
+        gprice = #{gprice,jdbcType=DECIMAL},
+      </if>
+      <if test="subsidy != null" >
+        subsidy = #{subsidy,jdbcType=DECIMAL},
+      </if>
+      <if test="guidegprice != null" >
+        guidegPrice = #{guidegprice,jdbcType=DECIMAL},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="motor != null" >
+        motor = #{motor,jdbcType=VARCHAR},
+      </if>
+      <if test="transmission != null" >
+        transmission = #{transmission,jdbcType=VARCHAR},
+      </if>
+      <if test="lWH != null" >
+        l-w-h = #{lWH,jdbcType=VARCHAR},
+      </if>
+      <if test="structure != null" >
+        structure = #{structure,jdbcType=VARCHAR},
+      </if>
+      <if test="maxspeed != null" >
+        maxSpeed = #{maxspeed,jdbcType=VARCHAR},
+      </if>
+      <if test="official0 != null" >
+        official0 = #{official0,jdbcType=VARCHAR},
+      </if>
+      <if test="reality100 != null" >
+        reality100 = #{reality100,jdbcType=VARCHAR},
+      </if>
+      <if test="reality0 != null" >
+        reality0 = #{reality0,jdbcType=VARCHAR},
+      </if>
+      <if test="oilwear != null" >
+        oilWear = #{oilwear,jdbcType=VARCHAR},
+      </if>
+      <if test="colligateoil != null" >
+        colligateOil = #{colligateoil,jdbcType=VARCHAR},
+      </if>
+      <if test="realitygap != null" >
+        realityGap = #{realitygap,jdbcType=VARCHAR},
+      </if>
+      <if test="warranty != null" >
+        warranty = #{warranty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where basicId = #{basicid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbBasic" >
+    update db_basic
+    set gprice = #{gprice,jdbcType=DECIMAL},
+      subsidy = #{subsidy,jdbcType=DECIMAL},
+      guidegPrice = #{guidegprice,jdbcType=DECIMAL},
+      level = #{level,jdbcType=VARCHAR},
+      motor = #{motor,jdbcType=VARCHAR},
+      transmission = #{transmission,jdbcType=VARCHAR},
+      l-w-h = #{lWH,jdbcType=VARCHAR},
+      structure = #{structure,jdbcType=VARCHAR},
+      maxSpeed = #{maxspeed,jdbcType=VARCHAR},
+      official0 = #{official0,jdbcType=VARCHAR},
+      reality100 = #{reality100,jdbcType=VARCHAR},
+      reality0 = #{reality0,jdbcType=VARCHAR},
+      oilWear = #{oilwear,jdbcType=VARCHAR},
+      colligateOil = #{colligateoil,jdbcType=VARCHAR},
+      realityGap = #{realitygap,jdbcType=VARCHAR},
+      warranty = #{warranty,jdbcType=VARCHAR}
+    where basicId = #{basicid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbConsultMappers">
+
+	<resultMap id="DbConsultResultMap" type="com.xawl.car.pojo.DbConsult">
+		<!-- 配置映射的订单信息 -->
+		<!-- id：指定查询列中的唯 一标识，订单信息的中的唯 一标识，如果有多个列组成唯一标识，配置多个id column：订单信息的唯 一标识 
+			列 property：订单信息的唯 一标识 列所映射到Orders中哪个属性 -->
+		<id column="consultid" property="consultid" />
+		<result column="mid" property="mid" />
+		<result column="phone" property="phone" />
+		<result column="uname" property="uname" />
+		<result column="date" property="date" />
+		<result column="status" property="status" />
+	</resultMap>
+	<select id="findConsult" parameterType="int" resultMap="DbConsultResultMap">
+		SELECT
+		consultId,`mid`,phone,uname,date,status
+		FROM
+		db_consult
+     where
+			status=#{status}
+		ORDER BY date
+		DESC
+	</select>
+
+
+	<delete id="delete" parameterType="int">
+		delete from db_consult where
+		consultId=#{cid}
+	</delete>
+	<update id="updateStatus" parameterType="int">
+		update db_consult set
+		status=1 where consultId=#{cid}
+	</update>
+</mapper>

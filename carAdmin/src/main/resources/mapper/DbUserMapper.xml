@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbUserMapper">
+	<resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbUser">
+		<id column="uid" property="uid" jdbcType="INTEGER" />
+		<result column="ulogin" property="ulogin" jdbcType="VARCHAR" />
+		<result column="uphone" property="uphone" jdbcType="VARCHAR" />
+		<result column="uaddress" property="uaddress" jdbcType="VARCHAR" />
+		<result column="ulongitude" property="ulongitude" jdbcType="VARCHAR" />
+		<result column="uname" property="uname" jdbcType="VARCHAR" />
+		<result column="upassword" property="upassword" jdbcType="VARCHAR" />
+		<result column="uprovince" property="uprovince" jdbcType="VARCHAR" />
+		<result column="ucity" property="ucity" jdbcType="VARCHAR" />
+		<result column="ulatitude" property="ulatitude" jdbcType="VARCHAR" />
+		<result column="udate" property="udate" jdbcType="TIMESTAMP" />
+		<result column="rid" property="rid" jdbcType="INTEGER" />
+		<result column="ulastlogin" property="ulastlogin" jdbcType="VARCHAR" />
+		<result column="uemail" property="uemail" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="rname" property="rname" jdbcType="VARCHAR" />
+		<result column="uimage" property="uimage" jdbcType="VARCHAR" />
+		<result column="token" property="token" jdbcType="VARCHAR" />
+		<result column="bid" property="bid" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="SMALLINT" />
+		<result column="isonline" property="isonline" jdbcType="SMALLINT" />
+	</resultMap>
+
+
+
+
+	<select id="selectAll" resultType="com.xawl.car.pojo.DbUser">
+		select * from db_user
+	</select>
+
+	<delete id="deleteByUid" parameterType="java.lang.Integer">
+		delete from db_user
+		where
+		uid = #{uid,jdbcType=INTEGER}
+	</delete>
+
+
+
+
+
+
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		*
+		from db_user
+		where uid = #{uid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		db_user
+		where uid = #{uid,jdbcType=INTEGER}
+	</delete>
+
+	<select id="selectByUid" parameterType="int"
+		resultType="com.xawl.car.pojo.DbUser">
+		select * from db_user where uid=#{uid}
+	</select>
+
+
+
+
+	<update id="stopUserByUid" parameterType="java.lang.Integer">
+		update db_user
+		set
+		status=0
+		where uid=#{uid,jdbcType=INTEGER}
+	</update>
+
+	<update id="startUserByUid" parameterType="java.lang.Integer">
+		update db_user
+		set
+		status=1
+		where uid=#{uid,jdbcType=INTEGER}
+	</update>
+
+
+
+
+
+
+
+
+</mapper>

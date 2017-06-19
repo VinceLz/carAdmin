@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbBusinessMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbBusiness" >
+    <id column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="bname" property="bname" jdbcType="VARCHAR" />
+    <result column="baddress" property="baddress" jdbcType="VARCHAR" />
+    <result column="bdate" property="bdate" jdbcType="TIMESTAMP" />
+    <result column="bphone" property="bphone" jdbcType="VARCHAR" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="longitude" property="longitude" jdbcType="VARCHAR" />
+    <result column="latitude" property="latitude" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="isHot" property="ishot" jdbcType="BIT" />
+    <result column="myphone" property="myphone" jdbcType="VARCHAR" />
+    <result column="majorbusiness" property="majorbusiness" jdbcType="VARCHAR" />
+    <result column="title1" property="title1" jdbcType="VARCHAR" />
+    <result column="bshowImage" property="bshowimage" jdbcType="VARCHAR" />
+    <result column="isActivity" property="isactivity" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    bid, bname, baddress, bdate, bphone, uname, longitude, latitude, type, isHot, myphone, 
+    majorbusiness, title1, bshowImage, isActivity
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbBusinessExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_business
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_business
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbBusinessExample" >
+    delete from db_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbBusiness" >
+    insert into db_business (bid, bname, baddress, 
+      bdate, bphone, uname, 
+      longitude, latitude, type, 
+      isHot, myphone, majorbusiness, 
+      title1, bshowImage, isActivity
+      )
+    values (#{bid,jdbcType=INTEGER}, #{bname,jdbcType=VARCHAR}, #{baddress,jdbcType=VARCHAR}, 
+      #{bdate,jdbcType=TIMESTAMP}, #{bphone,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{ishot,jdbcType=BIT}, #{myphone,jdbcType=VARCHAR}, #{majorbusiness,jdbcType=VARCHAR}, 
+      #{title1,jdbcType=VARCHAR}, #{bshowimage,jdbcType=VARCHAR}, #{isactivity,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbBusiness" >
+    insert into db_business
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="bname != null" >
+        bname,
+      </if>
+      <if test="baddress != null" >
+        baddress,
+      </if>
+      <if test="bdate != null" >
+        bdate,
+      </if>
+      <if test="bphone != null" >
+        bphone,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="longitude != null" >
+        longitude,
+      </if>
+      <if test="latitude != null" >
+        latitude,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+      <if test="myphone != null" >
+        myphone,
+      </if>
+      <if test="majorbusiness != null" >
+        majorbusiness,
+      </if>
+      <if test="title1 != null" >
+        title1,
+      </if>
+      <if test="bshowimage != null" >
+        bshowImage,
+      </if>
+      <if test="isactivity != null" >
+        isActivity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="bname != null" >
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="baddress != null" >
+        #{baddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bdate != null" >
+        #{bdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bphone != null" >
+        #{bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=BIT},
+      </if>
+      <if test="myphone != null" >
+        #{myphone,jdbcType=VARCHAR},
+      </if>
+      <if test="majorbusiness != null" >
+        #{majorbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="title1 != null" >
+        #{title1,jdbcType=VARCHAR},
+      </if>
+      <if test="bshowimage != null" >
+        #{bshowimage,jdbcType=VARCHAR},
+      </if>
+      <if test="isactivity != null" >
+        #{isactivity,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbBusinessExample" resultType="java.lang.Integer" >
+    select count(*) from db_business
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_business
+    <set >
+      <if test="record.bid != null" >
+        bid = #{record.bid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bname != null" >
+        bname = #{record.bname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.baddress != null" >
+        baddress = #{record.baddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bdate != null" >
+        bdate = #{record.bdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bphone != null" >
+        bphone = #{record.bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uname != null" >
+        uname = #{record.uname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null" >
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null" >
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ishot != null" >
+        isHot = #{record.ishot,jdbcType=BIT},
+      </if>
+      <if test="record.myphone != null" >
+        myphone = #{record.myphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorbusiness != null" >
+        majorbusiness = #{record.majorbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title1 != null" >
+        title1 = #{record.title1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bshowimage != null" >
+        bshowImage = #{record.bshowimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isactivity != null" >
+        isActivity = #{record.isactivity,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_business
+    set bid = #{record.bid,jdbcType=INTEGER},
+      bname = #{record.bname,jdbcType=VARCHAR},
+      baddress = #{record.baddress,jdbcType=VARCHAR},
+      bdate = #{record.bdate,jdbcType=TIMESTAMP},
+      bphone = #{record.bphone,jdbcType=VARCHAR},
+      uname = #{record.uname,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      isHot = #{record.ishot,jdbcType=BIT},
+      myphone = #{record.myphone,jdbcType=VARCHAR},
+      majorbusiness = #{record.majorbusiness,jdbcType=VARCHAR},
+      title1 = #{record.title1,jdbcType=VARCHAR},
+      bshowImage = #{record.bshowimage,jdbcType=VARCHAR},
+      isActivity = #{record.isactivity,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbBusiness" >
+    update db_business
+    <set >
+      <if test="bname != null" >
+        bname = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="baddress != null" >
+        baddress = #{baddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bdate != null" >
+        bdate = #{bdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bphone != null" >
+        bphone = #{bphone,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null" >
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null" >
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=BIT},
+      </if>
+      <if test="myphone != null" >
+        myphone = #{myphone,jdbcType=VARCHAR},
+      </if>
+      <if test="majorbusiness != null" >
+        majorbusiness = #{majorbusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="title1 != null" >
+        title1 = #{title1,jdbcType=VARCHAR},
+      </if>
+      <if test="bshowimage != null" >
+        bshowImage = #{bshowimage,jdbcType=VARCHAR},
+      </if>
+      <if test="isactivity != null" >
+        isActivity = #{isactivity,jdbcType=BIT},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbBusiness" >
+    update db_business
+    set bname = #{bname,jdbcType=VARCHAR},
+      baddress = #{baddress,jdbcType=VARCHAR},
+      bdate = #{bdate,jdbcType=TIMESTAMP},
+      bphone = #{bphone,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      isHot = #{ishot,jdbcType=BIT},
+      myphone = #{myphone,jdbcType=VARCHAR},
+      majorbusiness = #{majorbusiness,jdbcType=VARCHAR},
+      title1 = #{title1,jdbcType=VARCHAR},
+      bshowImage = #{bshowimage,jdbcType=VARCHAR},
+      isActivity = #{isactivity,jdbcType=BIT}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+</mapper>

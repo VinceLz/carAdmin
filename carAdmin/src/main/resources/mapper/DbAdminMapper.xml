@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xawl.car.mapper.DbAdminMapper" >
+  <resultMap id="BaseResultMap" type="com.xawl.car.pojo.DbAdmin" >
+    <id column="aid" property="aid" jdbcType="INTEGER" />
+    <result column="ausername" property="ausername" jdbcType="VARCHAR" />
+    <result column="apassword" property="apassword" jdbcType="VARCHAR" />
+    <result column="aname" property="aname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    aid, ausername, apassword, aname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xawl.car.pojo.DbAdminExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from db_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from db_admin
+    where aid = #{aid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from db_admin
+    where aid = #{aid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xawl.car.pojo.DbAdminExample" >
+    delete from db_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xawl.car.pojo.DbAdmin" >
+    insert into db_admin (aid, ausername, apassword, 
+      aname)
+    values (#{aid,jdbcType=INTEGER}, #{ausername,jdbcType=VARCHAR}, #{apassword,jdbcType=VARCHAR}, 
+      #{aname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xawl.car.pojo.DbAdmin" >
+    insert into db_admin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        aid,
+      </if>
+      <if test="ausername != null" >
+        ausername,
+      </if>
+      <if test="apassword != null" >
+        apassword,
+      </if>
+      <if test="aname != null" >
+        aname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aid != null" >
+        #{aid,jdbcType=INTEGER},
+      </if>
+      <if test="ausername != null" >
+        #{ausername,jdbcType=VARCHAR},
+      </if>
+      <if test="apassword != null" >
+        #{apassword,jdbcType=VARCHAR},
+      </if>
+      <if test="aname != null" >
+        #{aname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xawl.car.pojo.DbAdminExample" resultType="java.lang.Integer" >
+    select count(*) from db_admin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update db_admin
+    <set >
+      <if test="record.aid != null" >
+        aid = #{record.aid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ausername != null" >
+        ausername = #{record.ausername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apassword != null" >
+        apassword = #{record.apassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aname != null" >
+        aname = #{record.aname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update db_admin
+    set aid = #{record.aid,jdbcType=INTEGER},
+      ausername = #{record.ausername,jdbcType=VARCHAR},
+      apassword = #{record.apassword,jdbcType=VARCHAR},
+      aname = #{record.aname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xawl.car.pojo.DbAdmin" >
+    update db_admin
+    <set >
+      <if test="ausername != null" >
+        ausername = #{ausername,jdbcType=VARCHAR},
+      </if>
+      <if test="apassword != null" >
+        apassword = #{apassword,jdbcType=VARCHAR},
+      </if>
+      <if test="aname != null" >
+        aname = #{aname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xawl.car.pojo.DbAdmin" >
+    update db_admin
+    set ausername = #{ausername,jdbcType=VARCHAR},
+      apassword = #{apassword,jdbcType=VARCHAR},
+      aname = #{aname,jdbcType=VARCHAR}
+    where aid = #{aid,jdbcType=INTEGER}
+  </update>
+</mapper>
